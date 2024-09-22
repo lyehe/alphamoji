@@ -3,10 +3,8 @@ from typing import Dict, List, Any
 import random
 import os
 
-# Create a Flask application instance
-app: Flask = Flask(__name__)
-# Set a secure random secret key for the session
-app.secret_key = os.urandom(24)
+app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
 
 def get_random_emoji(letter: str) -> Dict[str, str]:
     # Dictionary containing emojis and their names for each letter
