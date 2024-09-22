@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block content %}
+<div id="game-container">
+  <div id="display-text" aria-label="Letter and emoji description"></div>
+  <div id="emoji-display" aria-label="Emoji for current letter"></div>
+  <div id="letter-ring">
+    <span id="previous-letter"></span>
+    <span id="letter-display"></span>
+    <span id="next-letter"></span>
+  </div>
+  <div id="feedback"></div>
+  <input type="text" id="hiddenInput" style="position: absolute; opacity: 0; pointer-events: none;">
+</div>
+<div id="control-buttons">
+  <button id="musicToggleBtn" aria-label="Toggle background music">🎵</button>
+  <button id="historyBtn" aria-label="View history">📜</button>
+  <button id="showKeyboardBtn" aria-label="Show keyboard">⌨️</button>
+</div>
+<div id="historyModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>History</h2>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+{% endblock %}

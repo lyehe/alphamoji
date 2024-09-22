@@ -1,0 +1,308 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
+body {
+  font-family: "Fredoka One", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 18px; /* Slightly increased base font size */
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+#game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.3s ease, scale 0.3s ease;
+}
+
+#letter-ring {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+  height: 7.5em;
+}
+
+#letter-display {
+  font-size: 7.5em;
+  color: #4a4a4a;
+  margin: 0 0.1em;
+  transition: color 0.3s ease;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 1.2em;
+  text-align: center;
+  line-height: 1.2;
+}
+
+#previous-letter,
+#next-letter {
+  font-size: 4.5em;
+  color: rgba(0, 0, 0, 0.2);
+  width: 0.8em;
+  text-align: center;
+  line-height: 2;
+}
+
+#feedback {
+  margin-top: 1rem;
+  font-size: 2.5vw;
+  font-weight: 700;
+  height: 3rem;
+  transition: all 0.3s ease;
+}
+
+#emoji-display {
+  font-family: inherit;
+  font-size: 15vw;
+  line-height: 1;
+  margin: 20px 0;
+}
+
+#display-text {
+  font-size: 4vw;
+  margin-bottom: 1rem;
+  color: #4a4a4a;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#control-buttons {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 10px;
+  z-index: 1000;
+}
+
+#musicToggleBtn,
+#historyBtn {
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 3vw;
+  z-index: 1000;
+}
+
+#showKeyboardBtn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 3vw;
+  z-index: 1000;
+}
+
+/* Hide the show keyboard button by default */
+#showKeyboardBtn {
+  display: none;
+  background: transparent;
+  color: inherit;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  border-radius: 10px;
+  overflow-y: auto;
+  font-size: 2vw;
+}
+
+#historyList {
+  list-style-type: none;
+  padding: 0;
+}
+
+#historyList li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  font-size: 1.8vw;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 3vw;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  #letter-ring {
+    height: 8.25em;
+  }
+
+  #letter-display {
+    font-size: 8.25em;
+    width: 1.2em;
+  }
+
+  #previous-letter,
+  #next-letter {
+    font-size: 4.95em;
+    width: 0.8em;
+  }
+
+  #feedback {
+    font-size: 4vw;
+  }
+
+  #emoji-display {
+    font-size: 20vw;
+  }
+
+  #display-text {
+    font-size: 6vw;
+  }
+
+  #musicToggleBtn,
+  #historyBtn,
+  #showKeyboardBtn {
+    font-size: 5vw;
+  }
+
+  .modal-content {
+    font-size: 3vw;
+  }
+
+  .close {
+    font-size: 4vw;
+  }
+
+  #historyList li {
+    font-size: 2.5vw;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  #letter-ring {
+    height: 9em;
+  }
+
+  #letter-display {
+    font-size: 9em;
+    width: 1.2em;
+  }
+
+  #previous-letter,
+  #next-letter {
+    font-size: 5.4em;
+    width: 0.8em;
+  }
+
+  #feedback {
+    font-size: 5vw;
+  }
+
+  #emoji-display {
+    font-size: 25vw;
+  }
+
+  #display-text {
+    font-size: 8vw;
+  }
+
+  #musicToggleBtn,
+  #historyBtn,
+  #showKeyboardBtn {
+    font-size: 7vw;
+  }
+
+  .modal-content {
+    font-size: 4vw;
+  }
+
+  .close {
+    font-size: 5vw;
+  }
+
+  #historyList li {
+    font-size: 3.5vw;
+  }
+}
+
+body.keyboard-visible {
+  padding-bottom: 50vh; /* Adjust this value based on keyboard height */
+}
+
+main.keyboard-visible {
+  transform: translateY(-15vh);
+  margin-bottom: 50vh; /* Adjust this value based on keyboard height */
+}
+
+body.keyboard-visible #game-container {
+  transform: translateY(-15vh) scale(0.8);
+}
