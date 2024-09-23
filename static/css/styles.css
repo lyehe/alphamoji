@@ -126,6 +126,7 @@ main {
   cursor: pointer;
   font-size: 3vw;
   z-index: 1000;
+  display: block;
 }
 
 /* Hide the show keyboard button by default */

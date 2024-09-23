@@ -304,23 +304,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   hiddenInput.addEventListener("focus", () => {
-    body.classList.add("keyboard-visible");
+    document.body.classList.add("keyboard-visible");
+    
+    // Wait for the keyboard to appear
     setTimeout(() => {
       const viewportHeight = window.innerHeight;
       const gameContainerRect = gameContainer.getBoundingClientRect();
-      if (gameContainerRect.bottom > viewportHeight) {
-        const overflowAmount = gameContainerRect.bottom - viewportHeight;
-        const currentTransform = window.getComputedStyle(gameContainer).transform;
-        const matrix = new DOMMatrix(currentTransform);
-        const currentTranslateY = matrix.m42;
-        gameContainer.style.transform = `translateY(${currentTranslateY - overflowAmount}px) scale(0.8)`;
+      const bottomOverflow = gameContainerRect.bottom - viewportHeight;
+      
+      if (bottomOverflow > 0) {
+        // Move the game container up by the overflow amount plus some extra space
+        gameContainer.style.transform = `translateY(-${bottomOverflow + 50}px)`;
       }
-    }, 300); // Wait for the keyboard to fully appear
+    }, 300); // Adjust this delay if needed
   });
 
   hiddenInput.addEventListener("blur", () => {
-    body.classList.remove("keyboard-visible");
-    gameContainer.style.transform = "";
+    document.body.classList.remove("keyboard-visible");
+    gameContainer.style.transform = '';
   });
 
   hiddenInput.addEventListener("input", (event) => {
