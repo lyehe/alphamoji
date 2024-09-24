@@ -18,21 +18,19 @@ A:
   - emoji: 😇
     name: Angel Face
   - emoji: 🇦🇺
-    name: Australia Flag
+    name: Australia
   - emoji: 🇦🇷
-    name: Argentina Flag
-  - emoji: 🦅
-    name: Eagle
+    name: Argentina
   - emoji: 🐒
     name: Ape
   - emoji: 🏹
     name: Archery
   - emoji: 🧮
     name: Abacus
-  - emoji: 🚜
-    name: Tractor
   - emoji: 🏺
     name: Amphora
+  - emoji: 😮
+    name: Astonished
 B:
   - emoji: 🍌
     name: Banana
@@ -51,9 +49,9 @@ B:
   - emoji: 🚲
     name: Bicycle
   - emoji: 🇧🇷
-    name: Brazil Flag
+    name: Brazil
   - emoji: 🇧🇪
-    name: Belgium Flag
+    name: Belgium
   - emoji: 🦬
     name: Bison
   - emoji: 🧠
@@ -88,6 +86,8 @@ B:
     name: Bald Eagle
   - emoji: 🍺
     name: Beer
+  - emoji: 🦋
+    name: Butterfly
 
 C:
   - emoji: 🍪
@@ -162,16 +162,11 @@ D:
     name: Door
   - emoji: 🐉
     name: Dragon
-  - emoji: 🥨
-    name: Pretzel
   - emoji: 🇩🇰
     name: Denmark
-  - emoji: 🇩🇪
-    name: Germany
   - emoji: 😵
     name: Dizzy
-  - emoji: 🥴
-    name: Woozy
+
 E:
   - emoji: 🐘
     name: Elephant
@@ -199,12 +194,6 @@ E:
     name: Spain
   - emoji: 🇪🇬
     name: Egypt
-  - emoji: 😮
-    name: Astonished
-  - emoji: 🤓
-    name: Nerd
-  - emoji: 🦋
-    name: Butterfly
 F:
   - emoji: 🐸
     name: Frog
@@ -232,14 +221,10 @@ F:
     name: Foot
   - emoji: 🍴
     name: Fork and Knife
-  - emoji: 🦋
-    name: Butterfly
   - emoji: 🧚
     name: Fairy
   - emoji: 🥏
     name: Flying Disc
-  - emoji: 🧊
-    name: Ice
   - emoji: 🥶
     name: Freeze
   - emoji: 😤
@@ -353,6 +338,8 @@ I:
     name: Iceberg
   - emoji: 😇
     name: Innocent
+  - emoji: 🧊
+    name: Ice
 J:
   - emoji: 🤹
     name: Juggler
@@ -434,6 +421,8 @@ L:
     name: Laughing
   - emoji: 💕
     name: Love
+  - emoji: 🧳
+    name: Luggage
 M:
   - emoji: 🐒
     name: Monkey
@@ -474,8 +463,6 @@ N:
     name: Night
   - emoji: 📰
     name: Newspaper
-  - emoji: 🧠
-    name: Brain
   - emoji: 🔢
     name: Numbers
   - emoji: 🇳🇱
@@ -546,6 +533,8 @@ P:
     name: Potato
   - emoji: 🤔
     name: Pondering
+  - emoji: 🥨
+    name: Pretzel
 Q:
   - emoji: 👸
     name: Queen
@@ -671,12 +660,12 @@ T:
     name: Tooth
   - emoji: 🎭
     name: Theater
-  - emoji: 🧳
-    name: Luggage
   - emoji: 🏆
     name: Trophy
   - emoji: 🧻
     name: Toilet Paper
+  - emoji: 🚜
+    name: Tractor
 U:
   - emoji: 🦄
     name: Unicorn
@@ -744,6 +733,8 @@ W:
     name: Wilted Flower
   - emoji: 🥳
     name: Woohoo
+  - emoji: 🥴
+    name: Woozy
 X:
   - emoji: ❌
     name: X Mark
