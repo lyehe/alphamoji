@@ -3,9 +3,25 @@ from typing import Dict, List, Any
 import random
 import os
 import time
+import yaml
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY") or os.urandom(24)
+app.secret_key = os.environ.get(
+    "SECRET_KEY", "default_secret_key"
+)  # Use environment variable or a default
+
+
+def load_emoji_dict() -> Dict[str, List[Dict[str, str]]]:
+    """
+    Loads the emoji dictionary from the YAML file.
+
+    :return: A dictionary containing emojis for each letter.
+    """
+    with open("emojis.yaml", "r", encoding="utf-8") as file:
+        return yaml.safe_load(file)
+
+
+emoji_dict: Dict[str, List[Dict[str, str]]] = load_emoji_dict()
 
 
 def get_random_emoji(letter: str) -> Dict[str, str]:
@@ -15,256 +31,6 @@ def get_random_emoji(letter: str) -> Dict[str, str]:
     :params letter: The letter for which to get the emoji.
     :return: A dictionary containing the emoji and its name.
     """
-    emoji_dict: Dict[str, List[Dict[str, str]]] = {
-        "A": [
-            {"emoji": "🍎", "name": "Apple"},
-            {"emoji": "✈️", "name": "Airplane"},
-            {"emoji": "👽", "name": "Alien"},
-            {"emoji": "🐜", "name": "Ant"},
-            {"emoji": "🚑", "name": "Ambulance"},
-            {"emoji": "🎨", "name": "Artist"},
-            {"emoji": "🍏", "name": "Avocado"},
-        ],
-        "B": [
-            {"emoji": "🍌", "name": "Banana"},
-            {"emoji": "🐻", "name": "Bear"},
-            {"emoji": "🎈", "name": "Balloon"},
-            {"emoji": "🦋", "name": "Butterfly"},
-            {"emoji": "🍞", "name": "Bread"},
-            {"emoji": "🦇", "name": "Bat"},
-            {"emoji": "🏀", "name": "Basketball"},
-            {"emoji": "🚲", "name": "Bike"},
-        ],
-        "C": [
-            {"emoji": "🍪", "name": "Cookie"},
-            {"emoji": "🐱", "name": "Cat"},
-            {"emoji": "🤠", "name": "Cowboy"},
-            {"emoji": "🎪", "name": "Circus"},
-            {"emoji": "🐄", "name": "Cow"},
-            {"emoji": "🥕", "name": "Carrot"},
-            {"emoji": "🍰", "name": "Cake"},
-            {"emoji": "🚗", "name": "Car"},
-        ],
-        "D": [
-            {"emoji": "🦕", "name": "Dinosaur"},
-            {"emoji": "🐶", "name": "Dog"},
-            {"emoji": "🍩", "name": "Donut"},
-            {"emoji": "🐬", "name": "Dolphin"},
-            {"emoji": "💃", "name": "Dancer"},
-            {"emoji": "🎲", "name": "Dice"},
-            {"emoji": "🚚", "name": "Delivery Truck"},
-            {"emoji": "🎻", "name": "Drum"},
-        ],
-        "E": [
-            {"emoji": "🐘", "name": "Elephant"},
-            {"emoji": "🥚", "name": "Egg"},
-            {"emoji": "👁️", "name": "Eye"},
-            {"emoji": "🦅", "name": "Eagle"},
-            {"emoji": "🎧", "name": "Earphones"},
-            {"emoji": "🧝", "name": "Elf"},
-            {"emoji": "👀", "name": "Eyes"},
-            {"emoji": "🦋", "name": "Ember"},
-            {"emoji": "🍳", "name": "Eggs"},
-        ],
-        "F": [
-            {"emoji": "🐸", "name": "Frog"},
-            {"emoji": "🦊", "name": "Fox"},
-            {"emoji": "🍟", "name": "Fries"},
-            {"emoji": "🐠", "name": "Fish"},
-            {"emoji": "🔥", "name": "Fire"},
-            {"emoji": "🦩", "name": "Flamingo"},
-            {"emoji": "🍇", "name": "Fruit"},
-            {"emoji": "🎏", "name": "Flag"},
-        ],
-        "G": [
-            {"emoji": "🦒", "name": "Giraffe"},
-            {"emoji": "🍇", "name": "Grapes"},
-            {"emoji": "🎸", "name": "Guitar"},
-            {"emoji": "👻", "name": "Ghost"},
-            {"emoji": "🦍", "name": "Gorilla"},
-            {"emoji": "🧤", "name": "Gloves"},
-            {"emoji": "🍔", "name": "Burger"},
-            {"emoji": "🚦", "name": "Traffic Light"},
-        ],
-        "H": [
-            {"emoji": "🐹", "name": "Hamster"},
-            {"emoji": "🏠", "name": "House"},
-            {"emoji": "🎩", "name": "Hat"},
-            {"emoji": "🚁", "name": "Helicopter"},
-            {"emoji": "🐴", "name": "Horse"},
-            {"emoji": "🔨", "name": "Hammer"},
-            {"emoji": "🦔", "name": "Hedgehog"},
-            {"emoji": "🌺", "name": "Hibiscus"},
-        ],
-        "I": [
-            {"emoji": "🍦", "name": "Icecream"},
-            {"emoji": "🏝️", "name": "Island"},
-            {"emoji": "🧊", "name": "Ice"},
-            {"emoji": "🎯", "name": "Target"},
-            {"emoji": "🍨", "name": "Ice Cream"},
-            {"emoji": "🚲", "name": "Ice Skates"},
-        ],
-        "J": [
-            {"emoji": "🤹", "name": "Juggler"},
-            {"emoji": "🕹️", "name": "Joystick"},
-            {"emoji": "🧃", "name": "Juice"},
-            {"emoji": "👖", "name": "Jeans"},
-            {"emoji": "🃏", "name": "Joker"},
-            {"emoji": "🍏", "name": "Jar"},
-            {"emoji": "🎷", "name": "Jazz"},
-        ],
-        "K": [
-            {"emoji": "🪁", "name": "Kite"},
-            {"emoji": "🔑", "name": "Key"},
-            {"emoji": "🥝", "name": "Kiwi"},
-            {"emoji": "👑", "name": "King"},
-            {"emoji": "🦘", "name": "Kangaroo"},
-            {"emoji": "🔪", "name": "Knife"},
-            {"emoji": "🎤", "name": "Microphone"},
-            {"emoji": "🚪", "name": "Knock"},
-        ],
-        "L": [
-            {"emoji": "🦁", "name": "Lion"},
-            {"emoji": "🍋", "name": "Lemon"},
-            {"emoji": "🦎", "name": "Lizard"},
-            {"emoji": "💡", "name": "Lamp"},
-            {"emoji": "🍃", "name": "Leaf"},
-            {"emoji": "🦙", "name": "Llama"},
-            {"emoji": "🥬", "name": "Lettuce"},
-            {"emoji": "🎬", "name": "Lights"},
-        ],
-        "M": [
-            {"emoji": "🐒", "name": "Monkey"},
-            {"emoji": "🌙", "name": "Moon"},
-            {"emoji": "🍄", "name": "Mushroom"},
-            {"emoji": "🧲", "name": "Magnet"},
-            {"emoji": "🎭", "name": "Mask"},
-            {"emoji": "🦟", "name": "Mosquito"},
-            {"emoji": "🍔", "name": "Muffin"},
-            {"emoji": "🚀", "name": "Mars"},
-        ],
-        "N": [
-            {"emoji": "👃", "name": "Nose"},
-            {"emoji": "🎶", "name": "Notes"},
-            {"emoji": "🌃", "name": "Night"},
-            {"emoji": "🪺", "name": "Nest"},
-            {"emoji": "📰", "name": "Newspaper"},
-            {"emoji": "🥜", "name": "Nut"},
-            {"emoji": "🚲", "name": "Napkin"},
-            {"emoji": "🎯", "name": "Needle"},
-        ],
-        "O": [
-            {"emoji": "🐙", "name": "Octopus"},
-            {"emoji": "🦉", "name": "Owl"},
-            {"emoji": "🍊", "name": "Orange"},
-            {"emoji": "🧅", "name": "Onion"},
-            {"emoji": "🦦", "name": "Otter"},
-            {"emoji": "🐍", "name": "Ophidian"},
-            {"emoji": "🍦", "name": "Oreo"},
-            {"emoji": "🎱", "name": "Pool"},
-        ],
-        "P": [
-            {"emoji": "🐼", "name": "Panda"},
-            {"emoji": "🍑", "name": "Peach"},
-            {"emoji": "🥧", "name": "Pie"},
-            {"emoji": "🦜", "name": "Parrot"},
-            {"emoji": "🖊️", "name": "Pen"},
-            {"emoji": "🥔", "name": "Potato"},
-            {"emoji": "🎁", "name": "Present"},
-            {"emoji": "🚍", "name": "Bus"},
-        ],
-        "Q": [
-            {"emoji": "👸", "name": "Queen"},
-            {"emoji": "🦆", "name": "Quack"},
-            {"emoji": "🧸", "name": "Quilt"},
-            {"emoji": "❓", "name": "Question"},
-            {"emoji": "🎯", "name": "Quiver"},
-            {"emoji": "🛴", "name": "Quadbike"},
-        ],
-        "R": [
-            {"emoji": "🌈", "name": "Rainbow"},
-            {"emoji": "🤖", "name": "Robot"},
-            {"emoji": "🚀", "name": "Rocket"},
-            {"emoji": "🌹", "name": "Rose"},
-            {"emoji": "🐰", "name": "Rabbit"},
-            {"emoji": "📻", "name": "Radio"},
-            {"emoji": "🍚", "name": "Rice"},
-            {"emoji": "🚗", "name": "Roadster"},
-        ],
-        "S": [
-            {"emoji": "⭐", "name": "Star"},
-            {"emoji": "🍓", "name": "Strawberry"},
-            {"emoji": "☀️", "name": "Sun"},
-            {"emoji": "🐿️", "name": "Squirrel"},
-            {"emoji": "🦈", "name": "Shark"},
-            {"emoji": "🧦", "name": "Socks"},
-            {"emoji": "🎸", "name": "Guitar"},
-            {"emoji": "🚲", "name": "Skateboard"},
-        ],
-        "T": [
-            {"emoji": "🐯", "name": "Tiger"},
-            {"emoji": "🌳", "name": "Tree"},
-            {"emoji": "🍅", "name": "Tomato"},
-            {"emoji": "🦃", "name": "Turkey"},
-            {"emoji": "🚂", "name": "Train"},
-            {"emoji": "🐢", "name": "Turtle"},
-            {"emoji": "🎺", "name": "Trumpet"},
-            {"emoji": "🚴", "name": "Bike"},
-        ],
-        "U": [
-            {"emoji": "☂️", "name": "Umbrella"},
-            {"emoji": "🦄", "name": "Unicorn"},
-            {"emoji": "🛸", "name": "UFO"},
-            {"emoji": "🧛", "name": "Undead"},
-            {"emoji": "🦺", "name": "Uniform"},
-            {"emoji": "🍇", "name": "Ugli Fruit"},
-            {"emoji": "🚜", "name": "Uplift"},
-            {"emoji": "🎯", "name": "Ultimate"},
-        ],
-        "V": [
-            {"emoji": "🏐", "name": "Volleyball"},
-            {"emoji": "🌋", "name": "Volcano"},
-            {"emoji": "🚐", "name": "Van"},
-            {"emoji": "🎻", "name": "Violin"},
-            {"emoji": "🦺", "name": "Vest"},
-            {"emoji": "🥕", "name": "Vegetable"},
-            {"emoji": "🍷", "name": "Wine Glass"},
-            {"emoji": "🚁", "name": "Vulture"},
-        ],
-        "W": [
-            {"emoji": "🌊", "name": "Wave"},
-            {"emoji": "🐺", "name": "Wolf"},
-            {"emoji": "🍉", "name": "Watermelon"},
-            {"emoji": "⌚", "name": "Watch"},
-            {"emoji": "🪄", "name": "Wand"},
-            {"emoji": "🧇", "name": "Waffle"},
-            {"emoji": "🧙", "name": "Wizard"},
-            {"emoji": "🐋", "name": "Whale"},
-            {"emoji": "🎣", "name": "Fishing"},
-        ],
-        "X": [
-            {"emoji": "❌", "name": "Xmark"},
-            {"emoji": "🦓", "name": "Xerus"},
-            {"emoji": "🎸", "name": "Xylophone"},
-        ],
-        "Y": [
-            {"emoji": "🪀", "name": "Yoyo"},
-            {"emoji": "🧒", "name": "Youth"},
-            {"emoji": "🧘", "name": "Yoga"},
-            {"emoji": "💛", "name": "Yellow"},
-            {"emoji": "☯️", "name": "Yin Yang"},
-            {"emoji": "🚲", "name": "Yacht"},
-            {"emoji": "🍋", "name": "Yam"},
-        ],
-        "Z": [
-            {"emoji": "🦓", "name": "Zebra"},
-            {"emoji": "🧟", "name": "Zombie"},
-            {"emoji": "💤", "name": "Zzz"},
-            {"emoji": "⚡", "name": "Zap"},
-            {"emoji": "🎷", "name": "Jazz"},
-            {"emoji": "🚗", "name": "Zoomcar"},
-        ],
-    }
     chosen_emoji: Dict[str, str] = random.choice(
         emoji_dict.get(letter.upper(), [{"emoji": "❓", "name": "Question"}])
     )

@@ -2,15 +2,16 @@
 
 {% block content %}
 <div id="game-container">
-    <div id="image-container">
-        <img id="letter-image" src="" alt="Letter image">
-        <div id="image-label"></div>
+    <div id="sentence-container">
+        <span id="display-text"></span>
     </div>
-    <div id="letter-ring">
-        <div id="previous-letter"></div>
-        <div id="letter-display"></div>
-        <div id="next-letter"></div>
+    <div id="card-container">
+        <div id="emoji-display"></div>
     </div>
-    <div id="feedback"></div>
+    <div id="letter-container">
+        <div class="letter-box"><span id="previous-letter"></span></div>
+        <div class="letter-box"><span id="letter-display"></span></div>
+        <div class="letter-box"><span id="next-letter"></span></div>
+    </div>
 </div>
 {% endblock %}

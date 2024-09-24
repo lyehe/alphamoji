@@ -16,16 +16,78 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalAttempts = document.getElementById("totalAttempts");
   const totalErrors = document.getElementById("totalErrors");
   const accuracy = document.getElementById("accuracy");
-  
+
   const timerValue = document.getElementById("timer-value");
   let timerInterval;
   let elapsedTime = 0;
-  
+
   let previousLetterData = null;
   let currentLetterData = null;
   let nextLetterData = null;
   let audioContext;
   let backgroundMusic;
+
+  const colorToggleBtn = document.getElementById("colorToggleBtn");
+
+  let isRainbow = true; // Change this to true
+
+  // Add this array of nice colors
+  const niceColors = [
+    "#D32F2F",
+    "#C2185B",
+    "#7B1FA2",
+    "#512DA8",
+    "#303F9F",
+    "#1976D2",
+    "#0288D1",
+    "#0097A7",
+    "#00796B",
+    "#388E3C",
+    "#689F38",
+    "#AFB42B",
+    "#FBC02D",
+    "#FFA000",
+    "#F57C00",
+  ];
+
+  let currentColor;
+
+  function getRandomColor() {
+    return niceColors[Math.floor(Math.random() * niceColors.length)];
+  }
+
+  function toggleColor() {
+    isRainbow = !isRainbow;
+    if (displayText) {
+      if (isRainbow) {
+        currentColor = getRandomColor();
+        displayText.style.color = currentColor;
+      } else {
+        displayText.style.color = "#333333"; // Darker gray color
+      }
+    }
+
+    if (colorToggleBtn) {
+      if (isRainbow) {
+        colorToggleBtn.textContent = "🔳";
+        colorToggleBtn.setAttribute("aria-label", "Switch to gray color");
+      } else {
+        colorToggleBtn.textContent = "🌈";
+        colorToggleBtn.setAttribute("aria-label", "Switch to colored text");
+      }
+    }
+  }
+
+  if (colorToggleBtn) {
+    colorToggleBtn.addEventListener("click", toggleColor);
+  } else {
+    console.error("Color toggle button not found in the DOM");
+  }
+
+  // Initialize with rainbow color
+  displayText.classList.add("rainbow");
+  colorToggleBtn.textContent = "🔳";
+  colorToggleBtn.setAttribute("aria-label", "Switch to gray color");
 
   function startTimer() {
     elapsedTime = 0;
@@ -98,6 +160,13 @@ document.addEventListener("DOMContentLoaded", () => {
     feedback.textContent = "";
     letterDisplay.style.color = "#4a4a4a";
     resetTimer();
+
+    if (isRainbow) {
+      currentColor = getRandomColor();
+      displayText.style.color = currentColor;
+    } else {
+      displayText.style.color = "#333333"; // Darker gray color
+    }
   }
 
   function initAudio() {
@@ -189,9 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/report_error", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ letter })
+      body: JSON.stringify({ letter }),
     });
   }
 
@@ -313,7 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return {
       play: () => {
-        if (audioContext.state === 'suspended') {
+        if (audioContext.state === "suspended") {
           audioContext.resume();
         }
         source.start();
@@ -322,10 +391,10 @@ document.addEventListener("DOMContentLoaded", () => {
         source.stop();
       },
       resume: () => {
-        if (audioContext.state === 'suspended') {
+        if (audioContext.state === "suspended") {
           audioContext.resume();
         }
-      }
+      },
     };
   }
 
@@ -351,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
         audioContext.suspend();
       }
     } else {
-      if (audioContext && audioContext.state === 'suspended') {
+      if (audioContext && audioContext.state === "suspended") {
         audioContext.resume();
       }
       if (backgroundMusic) {
@@ -380,12 +449,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   hiddenInput.addEventListener("focus", () => {
     document.body.classList.add("keyboard-visible");
-    
+
     setTimeout(() => {
       const viewportHeight = window.innerHeight;
       const gameContainerRect = gameContainer.getBoundingClientRect();
       const bottomOverflow = gameContainerRect.bottom - viewportHeight;
-      
+
       if (bottomOverflow > 0) {
         gameContainer.style.transform = `translateY(-${bottomOverflow + 50}px)`;
       }
@@ -394,7 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   hiddenInput.addEventListener("blur", () => {
     document.body.classList.remove("keyboard-visible");
-    gameContainer.style.transform = '';
+    gameContainer.style.transform = "";
   });
 
   hiddenInput.addEventListener("input", (event) => {
@@ -402,12 +471,63 @@ document.addEventListener("DOMContentLoaded", () => {
     event.target.value = "";
   });
 
-  document.body.addEventListener('touchstart', function() {
-    if (audioContext && audioContext.state === 'suspended') {
-      audioContext.resume();
+  document.body.addEventListener(
+    "touchstart",
+    function () {
+      if (audioContext && audioContext.state === "suspended") {
+        audioContext.resume();
+      }
+      if (backgroundMusic) {
+        backgroundMusic.resume();
+      }
+    },
+    false
+  );
+
+  const fontToggleBtn = document.getElementById("fontToggleBtn");
+
+  const fonts = ["font-fredoka", "font-comic", "font-indie", "font-schoolbell"];
+  const fontEmojis = ["🔤", "🖋️", "✏️", "📚"];
+  let currentFontIndex = 0;
+
+  function toggleFont() {
+    if (displayText && letterDisplay && previousLetter && nextLetter) {
+      displayText.classList.remove(fonts[currentFontIndex]);
+      letterDisplay.classList.remove(fonts[currentFontIndex]);
+      previousLetter.classList.remove(fonts[currentFontIndex]);
+      nextLetter.classList.remove(fonts[currentFontIndex]);
+
+      currentFontIndex = (currentFontIndex + 1) % fonts.length;
+
+      displayText.classList.add(fonts[currentFontIndex]);
+      letterDisplay.classList.add(fonts[currentFontIndex]);
+      previousLetter.classList.add(fonts[currentFontIndex]);
+      nextLetter.classList.add(fonts[currentFontIndex]);
     }
-    if (backgroundMusic) {
-      backgroundMusic.resume();
+
+    if (fontToggleBtn) {
+      fontToggleBtn.textContent = fontEmojis[currentFontIndex];
+      fontToggleBtn.setAttribute(
+        "aria-label",
+        `Switch to ${fonts[(currentFontIndex + 1) % fonts.length]} font`
+      );
     }
-  }, false);
+  }
+
+  if (fontToggleBtn) {
+    fontToggleBtn.addEventListener("click", toggleFont);
+  } else {
+    console.error("Font toggle button not found in the DOM");
+  }
+
+  // Initialize with the first font
+  displayText.classList.add(fonts[currentFontIndex]);
+  letterDisplay.classList.add(fonts[currentFontIndex]);
+  previousLetter.classList.add(fonts[currentFontIndex]);
+  nextLetter.classList.add(fonts[currentFontIndex]);
+  fontToggleBtn.textContent = fontEmojis[currentFontIndex];
+  fontToggleBtn.setAttribute(
+    "aria-label",
+    `Switch to ${fonts[(currentFontIndex + 1) % fonts.length]} font`
+  );
 });
