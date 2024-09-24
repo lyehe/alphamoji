@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+<div id="timer">Time: <span id="timer-value">0</span>s</div>
 <div id="game-container">
   <div id="display-text" aria-label="Letter and emoji description"></div>
   <div id="emoji-display" aria-label="Emoji for current letter"></div>
@@ -13,6 +14,7 @@
 <div id="control-buttons">
   <button id="musicToggleBtn" aria-label="Toggle background music">🎵</button>
   <button id="historyBtn" aria-label="View history">📜</button>
+  <button id="statsBtn" aria-label="View statistics">📊</button>
   <button id="showKeyboardBtn" aria-label="Show keyboard">⌨️</button>
 </div>
 <div id="historyModal" class="modal">
@@ -20,6 +22,15 @@
     <span class="close">&times;</span>
     <h2>History</h2>
     <ul id="historyList"></ul>
+  </div>
+</div>
+<div id="statsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-stats">&times;</span>
+    <h2>Statistics</h2>
+    <p>Total Attempts: <span id="totalAttempts">0</span></p>
+    <p>Total Errors: <span id="totalErrors">0</span></p>
+    <p>Accuracy: <span id="accuracy">0%</span></p>
   </div>
 </div>
 {% endblock %}

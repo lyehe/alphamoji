@@ -6,27 +6,81 @@ document.addEventListener("DOMContentLoaded", () => {
   const displayText = document.getElementById("display-text");
   const feedback = document.getElementById("feedback");
   const musicToggleBtn = document.getElementById("musicToggleBtn");
-
+  const historyBtn = document.getElementById("historyBtn");
+  const statsBtn = document.getElementById("statsBtn");
+  const historyModal = document.getElementById("historyModal");
+  const statsModal = document.getElementById("statsModal");
+  const closeBtn = document.querySelector(".close");
+  const closeStatsBtn = document.querySelector(".close-stats");
+  const historyList = document.getElementById("historyList");
+  const totalAttempts = document.getElementById("totalAttempts");
+  const totalErrors = document.getElementById("totalErrors");
+  const accuracy = document.getElementById("accuracy");
+  
+  const timerValue = document.getElementById("timer-value");
+  let timerInterval;
+  let elapsedTime = 0;
+  
   let previousLetterData = null;
   let currentLetterData = null;
   let nextLetterData = null;
   let audioContext;
   let backgroundMusic;
 
+  function startTimer() {
+    elapsedTime = 0;
+    timerValue.textContent = elapsedTime.toString();
+    clearInterval(timerInterval);
+    timerInterval = window.setInterval(() => {
+      elapsedTime += 1;
+      timerValue.textContent = elapsedTime.toString();
+    }, 1000);
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    elapsedTime = 0;
+    timerValue.textContent = elapsedTime.toString();
+    startTimer();
+  }
+
   function getRandomLetter() {
     return fetch("/get_random_letter")
-      .then((response) => response.json())
-      .then((data) => ({
-        letter: data.letter,
-        emoji: data.emoji,
-        displayText: data.display_text,
-      }));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data:", data);
+        return {
+          letter: data.letter,
+          emoji: data.emoji,
+          displayText: data.display_text,
+        };
+      })
+      .catch((error) => {
+        console.error("Error fetching random letter:", error);
+        return null;
+      });
   }
 
   async function initializeGame() {
-    currentLetterData = await getRandomLetter();
-    nextLetterData = await getRandomLetter();
-    updateDisplay();
+    try {
+      currentLetterData = await getRandomLetter();
+      nextLetterData = await getRandomLetter();
+      if (currentLetterData && nextLetterData) {
+        updateDisplay();
+        startTimer();
+      } else {
+        console.error("Failed to initialize game due to API errors");
+        // Handle the error, maybe show a message to the user
+      }
+    } catch (error) {
+      console.error("Error initializing game:", error);
+      // Handle the error, maybe show a message to the user
+    }
   }
 
   function updateDisplay() {
@@ -42,7 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
       ? currentLetterData.displayText
       : "";
     feedback.textContent = "";
-    letterDisplay.style.color = "#4a4a4a"; // Reset color
+    letterDisplay.style.color = "#4a4a4a";
+    resetTimer();
   }
 
   function initAudio() {
@@ -73,49 +128,50 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function playCorrectSound() {
-    playTone(523.25, 0.15); // C5
-    setTimeout(() => playTone(659.25, 0.15), 80); // E5
+    playTone(523.25, 0.15);
+    setTimeout(() => playTone(659.25, 0.15), 80);
   }
 
   function playIncorrectSound() {
-    playTone(311.13, 0.15); // Eb4
-    setTimeout(() => playTone(293.66, 0.15), 80); // D4
+    playTone(311.13, 0.15);
+    setTimeout(() => playTone(293.66, 0.15), 80);
   }
 
   async function handleCorrectGuess() {
-    letterDisplay.style.color = "#4CAF50"; // Green
+    letterDisplay.style.color = "#4CAF50";
     feedback.textContent = "🎉 Correct!";
     playCorrectSound();
 
-    // Disable key presses during the delay
     document.removeEventListener("keydown", handleKeyPress);
 
-    // Wait for 1 second before moving to the next letter
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Move to the next letter
     previousLetterData = currentLetterData;
     currentLetterData = nextLetterData;
     nextLetterData = await getRandomLetter();
 
     updateDisplay();
 
-    // Re-enable key presses
     document.addEventListener("keydown", handleKeyPress);
   }
 
   function handleIncorrectGuess() {
-    letterDisplay.style.color = "#FF5252"; // Red
-    feedback.textContent = "😕 Try again!";
-    playIncorrectSound();
+    if (currentLetterData) {
+      letterDisplay.style.color = "#FF5252";
+      feedback.textContent = "😕 Try again!";
+      playIncorrectSound();
 
-    // Disable key presses during the delay
-    document.removeEventListener("keydown", handleKeyPress);
+      document.removeEventListener("keydown", handleKeyPress);
 
-    // Wait for 0.5 seconds before allowing next input
-    setTimeout(() => {
-      document.addEventListener("keydown", handleKeyPress);
-    }, 500);
+      reportError(currentLetterData.letter);
+
+      setTimeout(() => {
+        document.addEventListener("keydown", handleKeyPress);
+      }, 500);
+    } else {
+      console.error("currentLetterData is null in handleIncorrectGuess");
+      // Handle this error case, maybe reinitialize the game
+    }
   }
 
   function handleKeyPress(event) {
@@ -129,18 +185,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function reportError(letter) {
+    fetch("/report_error", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ letter })
+    });
+  }
+
   document.addEventListener("keydown", handleKeyPress);
 
-  // Initialize audio context on user interaction
   document.addEventListener("click", initAudio, { once: true });
   document.addEventListener("keydown", initAudio, { once: true });
 
   initializeGame();
-
-  const historyBtn = document.getElementById("historyBtn");
-  const historyModal = document.getElementById("historyModal");
-  const closeBtn = document.querySelector(".close");
-  const historyList = document.getElementById("historyList");
 
   historyBtn.addEventListener("click", () => {
     fetch("/get_history")
@@ -149,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         historyList.innerHTML = "";
         data.forEach((item) => {
           const li = document.createElement("li");
-          li.textContent = `${item.letter}: ${item.emoji} ${item.emoji_name}`;
+          li.textContent = `${item.letter}: ${item.emoji} (${item.emoji_name}) - Errors: ${item.error}`;
           historyList.appendChild(li);
         });
         historyModal.style.display = "block";
@@ -160,9 +220,27 @@ document.addEventListener("DOMContentLoaded", () => {
     historyModal.style.display = "none";
   });
 
+  statsBtn.addEventListener("click", () => {
+    fetch("/get_statistics")
+      .then((response) => response.json())
+      .then((data) => {
+        totalAttempts.textContent = data.total_attempts.toString();
+        totalErrors.textContent = data.total_errors.toString();
+        accuracy.textContent = `${data.accuracy}%`;
+        statsModal.style.display = "block";
+      });
+  });
+
+  closeStatsBtn.addEventListener("click", () => {
+    statsModal.style.display = "none";
+  });
+
   window.addEventListener("click", (event) => {
     if (event.target === historyModal) {
       historyModal.style.display = "none";
+    }
+    if (event.target === statsModal) {
+      statsModal.style.display = "none";
     }
   });
 
@@ -179,21 +257,19 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     const data = buffer.getChannelData(0);
 
-    // Simple, cheerful melody with two rounds
     const baseNotes = [
-      { freq: 261.63, duration: 0.25 }, // C4
-      { freq: 293.66, duration: 0.25 }, // D4
-      { freq: 329.63, duration: 0.25 }, // E4
-      { freq: 349.23, duration: 0.25 }, // F4
-      { freq: 392.0, duration: 0.25 }, // G4
-      { freq: 349.23, duration: 0.25 }, // F4
-      { freq: 329.63, duration: 0.25 }, // E4
-      { freq: 293.66, duration: 0.25 }, // D4
+      { freq: 261.63, duration: 0.25 },
+      { freq: 293.66, duration: 0.25 },
+      { freq: 329.63, duration: 0.25 },
+      { freq: 349.23, duration: 0.25 },
+      { freq: 392.0, duration: 0.25 },
+      { freq: 349.23, duration: 0.25 },
+      { freq: 329.63, duration: 0.25 },
+      { freq: 293.66, duration: 0.25 },
     ];
 
-    // Create a second round of notes, one step higher
     const higherNotes = baseNotes.map((note) => ({
-      freq: note.freq * 1.122462, // Multiply by 2^(1/12) to go up one semitone
+      freq: note.freq * 1.122462,
       duration: note.duration,
     }));
 
@@ -219,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const noteT = (loopedTime - noteStartTime) / currentNote.duration;
-      const amplitude = (0.2 * (1 - Math.cos(2 * Math.PI * noteT))) / 2; // Smooth envelope
+      const amplitude = (0.2 * (1 - Math.cos(2 * Math.PI * noteT))) / 2;
 
       data[i] =
         amplitude * Math.sin(currentNote.freq * 2 * Math.PI * loopedTime);
@@ -230,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     source.loop = true;
 
     const gainNode = audioContext.createGain();
-    gainNode.gain.setValueAtTime(0.15, audioContext.currentTime); // Reduced volume
+    gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
 
     source.connect(gainNode);
     gainNode.connect(audioContext.destination);
@@ -290,7 +366,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector("main");
   const gameContainer = document.getElementById("game-container");
 
-  // Check if the device is mobile
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   if (isMobile) {
@@ -306,17 +381,15 @@ document.addEventListener("DOMContentLoaded", () => {
   hiddenInput.addEventListener("focus", () => {
     document.body.classList.add("keyboard-visible");
     
-    // Wait for the keyboard to appear
     setTimeout(() => {
       const viewportHeight = window.innerHeight;
       const gameContainerRect = gameContainer.getBoundingClientRect();
       const bottomOverflow = gameContainerRect.bottom - viewportHeight;
       
       if (bottomOverflow > 0) {
-        // Move the game container up by the overflow amount plus some extra space
         gameContainer.style.transform = `translateY(-${bottomOverflow + 50}px)`;
       }
-    }, 300); // Adjust this delay if needed
+    }, 300);
   });
 
   hiddenInput.addEventListener("blur", () => {
@@ -326,11 +399,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   hiddenInput.addEventListener("input", (event) => {
     const inputChar = event.target.value.toLowerCase();
-    // Process the input character here
-    // You may want to call your existing letter checking function
-    // For example: checkLetter(inputChar);
-    
-    // Clear the input field immediately
     event.target.value = "";
   });
 
@@ -343,5 +411,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, false);
 });
-
-// Make sure to update your existing letter checking logic to work with this new input method

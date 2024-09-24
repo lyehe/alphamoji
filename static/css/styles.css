@@ -10,7 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-size: 18px; /* Slightly increased base font size */
+  font-size: 18px;
 }
 
 @keyframes gradient {
@@ -64,6 +64,19 @@ main {
   width: 1.2em;
   text-align: center;
   line-height: 1.2;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 #previous-letter,
@@ -88,6 +101,19 @@ main {
   font-size: 15vw;
   line-height: 1;
   margin: 20px 0;
+  animation: moveEmoji 4s ease-in-out infinite;
+}
+
+@keyframes moveEmoji {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 #display-text {
@@ -95,6 +121,17 @@ main {
   margin-bottom: 1rem;
   color: #4a4a4a;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+#timer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.5em;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 10px 15px;
+  border-radius: 10px;
 }
 
 #control-buttons {
@@ -107,7 +144,8 @@ main {
 }
 
 #musicToggleBtn,
-#historyBtn {
+#historyBtn,
+#statsBtn {
   padding: 0;
   background: none;
   border: none;
@@ -129,21 +167,10 @@ main {
   display: block;
 }
 
-/* Hide the show keyboard button by default */
-#showKeyboardBtn {
-  display: none;
-  background: transparent;
-  color: inherit;
-  box-shadow: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 0;
   width: 100%;
@@ -178,7 +205,8 @@ main {
   font-size: 1.8vw;
 }
 
-.close {
+.close,
+.close-stats {
   color: #aaa;
   float: right;
   font-size: 3vw;
@@ -187,7 +215,9 @@ main {
 }
 
 .close:hover,
-.close:focus {
+.close:focus,
+.close-stats:hover,
+.close-stats:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -227,6 +257,7 @@ main {
 
   #musicToggleBtn,
   #historyBtn,
+  #statsBtn,
   #showKeyboardBtn {
     font-size: 5vw;
   }
@@ -235,7 +266,8 @@ main {
     font-size: 3vw;
   }
 
-  .close {
+  .close,
+  .close-stats {
     font-size: 4vw;
   }
 
@@ -278,6 +310,7 @@ main {
 
   #musicToggleBtn,
   #historyBtn,
+  #statsBtn,
   #showKeyboardBtn {
     font-size: 7vw;
   }
@@ -286,7 +319,8 @@ main {
     font-size: 4vw;
   }
 
-  .close {
+  .close,
+  .close-stats {
     font-size: 5vw;
   }
 
@@ -296,12 +330,12 @@ main {
 }
 
 body.keyboard-visible {
-  padding-bottom: 50vh; /* Adjust this value based on keyboard height */
+  padding-bottom: 50vh;
 }
 
 main.keyboard-visible {
   transform: translateY(-15vh);
-  margin-bottom: 50vh; /* Adjust this value based on keyboard height */
+  margin-bottom: 50vh;
 }
 
 body.keyboard-visible #game-container {
