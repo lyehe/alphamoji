@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<div id="timer">Time: <span id="timer-value">0</span>s</div>
+<div id="timer"><span id="timer-value">0.0</span>s</div>
 <div id="game-container">
   <div id="card-container">
     <div id="display-text" aria-label="Letter and emoji description"></div>
@@ -31,7 +31,9 @@
   <button id="statsBtn" aria-label="View statistics">📊</button>
   <button id="showKeyboardBtn" aria-label="Show keyboard">⌨️</button>
   <button id="colorToggleBtn" aria-label="Toggle color">🌈</button>
+  <button id="caseToggleBtn" aria-label="Toggle character case">Aa</button>
   <button id="fontToggleBtn" aria-label="Change font">🔤</button>
+  <button id="fullscreenToggleBtn" aria-label="Toggle fullscreen">🖥️</button>
 </div>
 <div id="historyModal" class="modal">
   <div class="modal-content">

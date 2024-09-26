@@ -5,7 +5,7 @@ import os
 import time
 import yaml
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", static_url_path='/static')
 app.secret_key = os.environ.get(
     "SECRET_KEY", "default_secret_key"
 )  # Use environment variable or a default
@@ -65,28 +65,52 @@ def get_random_letter() -> Any:
 
     letter: str = random.choice(available_letters)
     emoji_data: Dict[str, str] = get_random_emoji(letter)
+    timestamp: int = int(time.time())
+    
     result: Dict[str, Any] = {
         "letter": letter,
         "emoji": emoji_data["emoji"],
         "emoji_name": emoji_data["name"],
         "display_text": f"{letter} is for {emoji_data['name']}",
-        "timestamp": int(time.time()),
+        "timestamp": timestamp,
     }
 
-    history = [item for item in history if item["letter"] != letter]
     history.append(
         {
             "letter": letter,
             "emoji": emoji_data["emoji"],
             "emoji_name": emoji_data["name"],
-            "timestamp": result["timestamp"],
+            "timestamp": timestamp,
             "error": 0,
+            "time_taken": None,  # We'll update this when the task is completed
         }
     )
-    session["history"] = history[-99:]
+    session["history"] = history[-99:]  # Keep the last 99 entries
     session["current_letter"] = letter
 
     return jsonify(result)
+
+@app.route("/update_time_taken", methods=["POST"])
+def update_time_taken() -> Any:
+    """
+    Updates the time taken for the current letter task.
+
+    :return: JSON response indicating success.
+    """
+    data: Dict[str, Any] = request.get_json()
+    letter: str = data.get("letter", "").upper()
+    time_taken: float = data.get("time_taken", 0)
+    
+    history: List[Dict[str, Any]] = session.get("history", [])
+
+    for item in reversed(history):
+        if item["letter"] == letter and item["time_taken"] is None:
+            item["time_taken"] = time_taken
+            break
+
+    session["history"] = history
+
+    return jsonify({"status": "success"})
 
 
 @app.route("/report_error", methods=["POST"])
@@ -117,13 +141,7 @@ def get_history() -> Any:
     :return: JSON containing the history list.
     """
     history: List[Dict[str, Any]] = session.get("history", [])
-    current_letter: str = session.get("current_letter", "")
-
-    filtered_history: List[Dict[str, Any]] = [
-        item for item in history if item["letter"] != current_letter
-    ]
-
-    return jsonify(filtered_history)
+    return jsonify(history)
 
 
 @app.route("/get_statistics")
