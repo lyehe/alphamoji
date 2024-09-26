@@ -132,3 +132,21 @@ export function pauseAudio() {
     backgroundMusicSource.playbackRate.value = 0;
   }
 }
+
+/**
+ * Starts the background music.
+ */
+export function startBackgroundMusic() {
+  if (!backgroundMusic) {
+    loadBackgroundMusic().then(() => {
+      if (backgroundMusic) {
+        backgroundMusic.start();
+        const musicToggleBtn = document.getElementById("musicToggleBtn");
+        if (musicToggleBtn) {
+          musicToggleBtn.textContent = "🔇";
+          musicToggleBtn.setAttribute("aria-label", "Stop background music");
+        }
+      }
+    }).catch(error => console.error("Error starting background music:", error));
+  }
+}

@@ -6,9 +6,9 @@
 import { initializeGame } from "./modules/game.js";
 import { handleKeyPress } from "./modules/input.js";
 import { toggleColor, toggleFont, toggleCase } from "./modules/ui.js";
-import { toggleBackgroundMusic, initAudio } from "./modules/audio.js";
+import { toggleBackgroundMusic, initAudio, startBackgroundMusic } from "./modules/audio.js";
 import { showHistory, showStats, setupModalClosers } from "./modules/modals.js";
-import { handleMobileKeyboard } from "./modules/mobile.js";
+import { handleMobileKeyboard, showMobileKeyboard } from "./modules/mobile.js";
 
 /**
  * Initializes the game and sets up event listeners when the DOM is fully loaded.
@@ -19,9 +19,18 @@ document.addEventListener("DOMContentLoaded", () => {
   handleMobileKeyboard();
   setupModalClosers();
 
-  // Initialize audio on first user interaction
-  document.addEventListener("click", initAudio, { once: true });
-  document.addEventListener("keydown", initAudio, { once: true });
+  // Initialize audio, start background music, and show mobile keyboard on first user interaction
+  const startAudioAndFullscreen = () => {
+    initAudio();
+    startBackgroundMusic();
+    requestFullScreen();
+    showMobileKeyboard();
+    document.removeEventListener("click", startAudioAndFullscreen);
+    document.removeEventListener("touchstart", startAudioAndFullscreen);
+  };
+
+  document.addEventListener("click", startAudioAndFullscreen, { once: true });
+  document.addEventListener("touchstart", startAudioAndFullscreen, { once: true });
 
   document.addEventListener("visibilitychange", handleVisibilityChange);
   document.body.addEventListener("touchstart", handleTouchStart, {
@@ -77,4 +86,20 @@ function handleTouchStart() {
     window.audioContext.resume();
   }
   window.backgroundMusic?.resume();
+}
+
+// Add this function to the script.js file
+function requestFullScreen() {
+  const element = document.documentElement;
+  if (element.requestFullscreen) {
+    element.requestFullscreen().catch((err) => {
+      console.warn("Error attempting to enable full-screen mode:", err);
+    });
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
 }

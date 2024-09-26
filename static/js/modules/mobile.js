@@ -26,15 +26,6 @@ export function handleMobileKeyboard() {
   } else {
     setupDesktopInterface(showKeyboardBtn, fullscreenToggleBtn);
   }
-
-  // Try to enter full screen mode on page load
-  requestFullScreen();
-
-  // Try to enter full screen mode on the first user interaction or keystroke
-  document.body.addEventListener("click", requestFullScreen, { once: true });
-  document.addEventListener("keydown", requestFullScreenOnFirstKey);
-
-  // Disable browser hotkeys
   disableBrowserHotkeys();
 }
 
@@ -49,14 +40,14 @@ function setupMobileInterface(gameContainer, showKeyboardBtn) {
     showKeyboardBtn.addEventListener("click", toggleMobileKeyboard);
   }
 
-  const keyboardInput = createMobileKeyboardInput();
-  document.body.appendChild(keyboardInput);
+  mobileInputElement = createMobileKeyboardInput();
+  document.body.appendChild(mobileInputElement);
 
-  keyboardInput.addEventListener("input", handleMobileInput);
-  keyboardInput.addEventListener("focus", () =>
+  mobileInputElement.addEventListener("input", handleMobileInput);
+  mobileInputElement.addEventListener("focus", () =>
     adjustForKeyboard(gameContainer)
   );
-  keyboardInput.addEventListener("blur", () =>
+  mobileInputElement.addEventListener("blur", () =>
     adjustForKeyboard(gameContainer)
   );
 
@@ -113,7 +104,7 @@ function handleMobileInput(event) {
   const inputChar = event.target.value;
   if (inputChar) {
     handleKeyPress({ key: inputChar.toLowerCase() });
-    requestFullScreen(); // Try to enter full screen on first keystroke
+    // Remove the requestFullScreen call from here
   }
   event.target.value = "";
 }
@@ -150,11 +141,11 @@ function requestFullScreen() {
   }
 }
 
-function requestFullScreenOnFirstKey(event) {
-  requestFullScreen();
-  // Remove this event listener after the first keystroke
-  document.removeEventListener("keydown", requestFullScreenOnFirstKey);
-}
+// Remove or comment out this function as it's no longer needed
+// function requestFullScreenOnFirstKey(event) {
+//   requestFullScreen();
+//   document.removeEventListener("keydown", requestFullScreenOnFirstKey);
+// }
 
 /**
  * Configures the interface for desktop devices.
@@ -306,4 +297,11 @@ function adjustForKeyboard(gameContainer) {
     cardContainer.offsetHeight;
     emojiDisplay.offsetHeight;
   }, 100);
+}
+
+export function showMobileKeyboard() {
+  if (mobileInputElement && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    mobileInputElement.focus();
+    mobileInputElement.lang = "en";
+  }
 }
