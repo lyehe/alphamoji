@@ -4,6 +4,7 @@ import os
 from src.game_logic import generate_random_letter, create_letter_result
 from src.game_statistics import calculate_statistics
 import time
+import yaml
 
 app = Flask(__name__, static_folder="static", static_url_path="/static")
 app.secret_key = os.environ.get(
