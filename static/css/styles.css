@@ -63,6 +63,7 @@ body {
 
 #card-container {
   width: 100%;
+  max-width: 600px; /* Increased from 500px */
   aspect-ratio: 1 / 1;
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
@@ -72,13 +73,19 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin: 20px 0 5px;
+  margin: 20px auto 5px;
   position: relative;
   padding-top: 40px;
+  transition: all 0.3s ease;
 }
 
+#card-container.two-lines {
+  aspect-ratio: 1 / 1.2;
+}
+
+
 #emoji-display {
-  font-size: 25vmin;
+  font-size: 30vmin; /* Increased from 25vmin */
   line-height: 1;
   position: absolute;
   top: calc(50% + 20px); /* Adjust this value as needed */
@@ -227,6 +234,8 @@ body {
   width: 80%;
   max-width: 500px;
   border-radius: 10px;
+  max-height: 80vh; /* Add this line */
+  overflow-y: auto; /* Add this line */
 }
 
 .modal-header {
@@ -323,28 +332,35 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0;
-    margin: 6vh auto 1vh; /* Changed from 2vh auto to 6vh auto 2vh */
+    margin: 6vh auto 1vh;
     box-sizing: border-box;
     position: relative;
+  }
+
+  #card-container.two-lines {
+    height: 78vw;
+    max-height: 78vmin;
+    aspect-ratio: 1 / 1.2;
   }
 
   #emoji-display {
     font-size: 35vw;
     position: absolute;
-    top: 55%; /* Moved down from 50% to 55% */
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
     width: 100%;
-    height: calc(100% - 40px); /* Adjusted to account for the display text */
+    height: calc(100% - 40px);
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: moveEmojiMobile 2s ease-in-out infinite; /* Added a mobile-specific animation */
+    animation: moveEmojiMobile 2s ease-in-out infinite;
   }
 
   @keyframes moveEmojiMobile {
-    0%, 100% {
+    0%,
+    100% {
       transform: translate(-50%, -50%);
     }
     50% {
@@ -409,6 +425,26 @@ body {
     right: 2vw;
     font-size: clamp(28px, 7vw, 42px);
   }
+
+  .modal-content {
+    margin: 10% auto;
+    padding: 15px;
+    width: 90%;
+    font-size: 14px; /* Add this line */
+  }
+
+  .modal-header h2 {
+    font-size: 18px; /* Add this line */
+  }
+
+  #historyList {
+    max-height: 60vh; /* Add this line */
+    overflow-y: auto; /* Add this line */
+  }
+
+  #historyList li {
+    margin-bottom: 10px; /* Add this line */
+  }
 }
 
 @media (max-width: 600px) and (orientation: landscape) {
@@ -457,4 +493,154 @@ body {
 }
 .font-schoolbell {
   font-family: "Schoolbell", cursive;
+}
+
+@media (max-width: 1400px) {
+  #card-container {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+  #sentence-container {
+    font-size: clamp(18px, 3.2vw, 26px);
+  }
+  #letter-container {
+    gap: 8px;
+    font-size: 22px;
+  }
+  #letter-display {
+    font-size: clamp(90px, 22.5vw, 180px);
+  }
+  #previous-letter,
+  #next-letter {
+    font-size: clamp(45px, 11.25vw, 90px);
+  }
+  body {
+    font-size: 14px;
+  }
+  #control-buttons {
+    font-size: 12px;
+  }
+  #emoji-display {
+    font-size: 24vmin;
+  }
+}
+
+@media (max-width: 1200px) {
+  #card-container {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+  #sentence-container {
+    font-size: clamp(16px, 2.8vw, 22px);
+  }
+  #letter-container {
+    gap: 7px;
+    font-size: 20px;
+  }
+  #letter-display {
+    font-size: clamp(80px, 20vw, 160px);
+  }
+  #previous-letter,
+  #next-letter {
+    font-size: clamp(40px, 10vw, 80px);
+  }
+  body {
+    font-size: 13px;
+  }
+  #control-buttons {
+    font-size: 11px;
+  }
+  #emoji-display {
+    font-size: 22vmin;
+  }
+}
+
+@media (max-width: 992px) {
+  #card-container {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+  #sentence-container {
+    font-size: clamp(14px, 2.4vw, 20px);
+  }
+  #letter-container {
+    gap: 6px;
+    font-size: 18px;
+  }
+  #letter-display {
+    font-size: clamp(70px, 17.5vw, 140px);
+  }
+  #previous-letter,
+  #next-letter {
+    font-size: clamp(35px, 8.75vw, 70px);
+  }
+  body {
+    font-size: 12px;
+  }
+  #control-buttons {
+    font-size: 10px;
+  }
+  #emoji-display {
+    font-size: 20vmin;
+  }
+}
+
+@media (max-width: 768px) {
+  #card-container {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+  #sentence-container {
+    font-size: clamp(12px, 2vw, 16px);
+  }
+  #letter-container {
+    gap: 4px;
+    font-size: 16px;
+  }
+  #letter-display {
+    font-size: clamp(60px, 15vw, 120px);
+  }
+  #previous-letter,
+  #next-letter {
+    font-size: clamp(30px, 7.5vw, 60px);
+  }
+  body {
+    font-size: 11px;
+  }
+  #control-buttons {
+    font-size: 9px;
+  }
+  #emoji-display {
+    font-size: 18vmin;
+  }
+}
+
+@media (max-width: 640px) {
+  #card-container {
+    max-width: 50vw;
+    max-height: 50vh;
+  }
+  #sentence-container {
+    font-size: clamp(10px, 1.6vw, 14px);
+  }
+  #letter-container {
+    gap: 3px;
+    font-size: 14px;
+  }
+  #letter-display {
+    font-size: clamp(50px, 12.5vw, 100px);
+  }
+  #previous-letter,
+  #next-letter {
+    font-size: clamp(25px, 6.25vw, 50px);
+  }
+  body {
+    font-size: 10px;
+  }
+  #control-buttons {
+    font-size: 8px;
+  }
+  #emoji-display {
+    font-size: 16vmin;
+  }
 }

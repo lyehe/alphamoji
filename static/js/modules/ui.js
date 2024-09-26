@@ -149,6 +149,7 @@ export function updateDisplay(
     emojiDisplay: document.getElementById("emoji-display"),
     displayText: document.getElementById("display-text"),
     feedback: document.getElementById("feedback"),
+    cardContainer: document.getElementById("card-container"),
   };
 
   elements.previousLetter.textContent = previousLetterData?.letter || "";
@@ -172,6 +173,10 @@ export function updateDisplay(
   } else {
     elements.displayText.style.color = "#333333";
   }
+
+  // Check if the display text is two lines long
+  const isTwoLines = elements.displayText.offsetHeight > elements.displayText.lineHeight * 1.5;
+  elements.cardContainer.classList.toggle("two-lines", isTwoLines);
 
   updateLetterCase();
 }
