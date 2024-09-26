@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
     showMobileKeyboard();
     document.removeEventListener("click", startAudioAndFullscreen);
     document.removeEventListener("touchstart", startAudioAndFullscreen);
+    document.removeEventListener("keydown", startAudioAndFullscreen);
   };
 
   document.addEventListener("click", startAudioAndFullscreen, { once: true });
   document.addEventListener("touchstart", startAudioAndFullscreen, { once: true });
+  document.addEventListener("keydown", startAudioAndFullscreen, { once: true });
 
   document.addEventListener("visibilitychange", handleVisibilityChange);
   document.body.addEventListener("touchstart", handleTouchStart, {
@@ -43,7 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
  * Sets up event listeners for various game controls and buttons.
  */
 function setupEventListeners() {
-  document.addEventListener("keydown", handleKeyPress);
+  // Remove the keydown event listener from here
+  // document.addEventListener("keydown", handleKeyPress);
 
   const buttonHandlers = [
     { id: "colorToggleBtn", handler: toggleColor },
@@ -61,6 +64,11 @@ function setupEventListeners() {
     } else {
       console.warn(`Button with id '${id}' not found`);
     }
+  });
+
+  // Add the keydown event listener here, after startAudioAndFullscreen has been triggered
+  document.addEventListener("keydown", (event) => {
+    handleKeyPress(event);
   });
 }
 
