@@ -1,9 +1,21 @@
-import { handleKeyPress } from './game.js';
+import { handleKeyPress } from "./game.js";
+
+// Add this function at the beginning of the file
+function setVH() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+}
+
+// Call this function initially and on resize
+window.addEventListener("resize", setVH);
+window.addEventListener("orientationchange", setVH);
+setVH();
 
 /**
  * Sets up mobile-specific functionality and handles device-specific adjustments.
  */
 export function handleMobileKeyboard() {
+  setVH(); // Add this line
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   const fullscreenToggleBtn = document.getElementById("fullscreenToggleBtn");
   const gameContainer = document.getElementById("game-container");
@@ -14,6 +26,16 @@ export function handleMobileKeyboard() {
   } else {
     setupDesktopInterface(showKeyboardBtn, fullscreenToggleBtn);
   }
+
+  // Try to enter full screen mode on page load
+  requestFullScreen();
+
+  // Try to enter full screen mode on the first user interaction or keystroke
+  document.body.addEventListener("click", requestFullScreen, { once: true });
+  document.addEventListener("keydown", requestFullScreenOnFirstKey);
+
+  // Disable browser hotkeys
+  disableBrowserHotkeys();
 }
 
 /**
@@ -22,17 +44,35 @@ export function handleMobileKeyboard() {
  * @param {HTMLElement} showKeyboardBtn - The button to show the keyboard.
  */
 function setupMobileInterface(gameContainer, showKeyboardBtn) {
-  if (showKeyboardBtn) showKeyboardBtn.style.display = "block";
+  if (showKeyboardBtn) {
+    showKeyboardBtn.style.display = "block";
+    showKeyboardBtn.addEventListener("click", toggleMobileKeyboard);
+  }
 
   const keyboardInput = createMobileKeyboardInput();
   document.body.appendChild(keyboardInput);
 
   keyboardInput.addEventListener("input", handleMobileInput);
+  keyboardInput.addEventListener("focus", () =>
+    adjustForKeyboard(gameContainer)
+  );
+  keyboardInput.addEventListener("blur", () =>
+    adjustForKeyboard(gameContainer)
+  );
 
-  window.addEventListener("load", () => keyboardInput.focus());
-  window.addEventListener("resize", () => adjustForKeyboard(gameContainer));
+  // Use visualViewport API for more reliable keyboard detection
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", () =>
+      adjustForKeyboard(gameContainer)
+    );
+  } else {
+    window.addEventListener("resize", () => adjustForKeyboard(gameContainer));
+  }
 
   if (fullscreenToggleBtn) fullscreenToggleBtn.style.display = "none";
+
+  // Add this line to call adjustForKeyboard immediately
+  adjustForKeyboard(gameContainer);
 }
 
 /**
@@ -42,23 +82,25 @@ function setupMobileInterface(gameContainer, showKeyboardBtn) {
 function createMobileKeyboardInput() {
   const input = document.createElement("input");
   Object.assign(input, {
-    type: "text",
+    type: "password",
     id: "mobileInput",
     autocomplete: "off",
     autocorrect: "off",
     autocapitalize: "off",
     spellcheck: false,
+    inputmode: "text",
+    lang: "en",
   });
   Object.assign(input.style, {
     position: "fixed",
-    bottom: "0",
+    top: "-100px", // Move it off-screen
     left: "0",
+    opacity: "0", // Make it invisible
     width: "100%",
     padding: "10px",
     fontSize: "16px",
     border: "none",
-    borderTop: "1px solid #ccc",
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "transparent",
   });
   return input;
 }
@@ -68,22 +110,50 @@ function createMobileKeyboardInput() {
  * @param {Event} event - The input event.
  */
 function handleMobileInput(event) {
-  const inputChar = event.target.value.toLowerCase();
+  const inputChar = event.target.value;
+  if (inputChar) {
+    handleKeyPress({ key: inputChar.toLowerCase() });
+    requestFullScreen(); // Try to enter full screen on first keystroke
+  }
   event.target.value = "";
-  handleKeyPress({ key: inputChar });
 }
 
-/**
- * Adjusts the game container position when the mobile keyboard appears.
- * @param {HTMLElement} gameContainer - The main game container element.
- */
-function adjustForKeyboard(gameContainer) {
-  const viewportHeight = window.innerHeight;
-  const keyboardHeight = viewportHeight - document.documentElement.clientHeight;
-  
-  gameContainer.style.transform = keyboardHeight > 0 
-    ? `translateY(-${keyboardHeight}px)` 
-    : "";
+function toggleMobileKeyboard() {
+  const mobileInput = document.getElementById("mobileInput");
+  const showKeyboardBtn = document.getElementById("showKeyboardBtn");
+
+  if (mobileInput) {
+    if (document.activeElement === mobileInput) {
+      mobileInput.blur();
+    } else {
+      mobileInput.focus();
+      mobileInput.lang = "en";
+    }
+  }
+}
+
+function requestFullScreen() {
+  const element = document.documentElement;
+  if (element.requestFullscreen) {
+    element.requestFullscreen().catch((err) => {
+      console.warn("Error attempting to enable full-screen mode:", err);
+    });
+  } else if (element.mozRequestFullScreen) {
+    // Firefox
+    element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    // Chrome, Safari and Opera
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    // IE/Edge
+    element.msRequestFullscreen();
+  }
+}
+
+function requestFullScreenOnFirstKey(event) {
+  requestFullScreen();
+  // Remove this event listener after the first keystroke
+  document.removeEventListener("keydown", requestFullScreenOnFirstKey);
 }
 
 /**
@@ -94,7 +164,7 @@ function adjustForKeyboard(gameContainer) {
 function setupDesktopInterface(showKeyboardBtn, fullscreenToggleBtn) {
   if (showKeyboardBtn) showKeyboardBtn.style.display = "none";
 
-  document.addEventListener("keydown", handleKeyPress);
+  document.addEventListener("keydown", handleKeyPressWithPrevention);
 
   if (fullscreenToggleBtn) {
     fullscreenToggleBtn.style.display = "block";
@@ -103,14 +173,137 @@ function setupDesktopInterface(showKeyboardBtn, fullscreenToggleBtn) {
 }
 
 /**
- * Toggles fullscreen mode for the document.
+ * Handles key press events with prevention of default browser behavior.
+ * @param {KeyboardEvent} event - The keyboard event.
  */
+function handleKeyPressWithPrevention(event) {
+  // Prevent default behavior for all keys except F11 (fullscreen)
+  if (event.key !== "F11") {
+    event.preventDefault();
+  }
+  handleKeyPress(event);
+}
+
+/**
+ * Disables common browser hotkeys.
+ */
+function disableBrowserHotkeys() {
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      // Allow F11 for fullscreen toggle
+      if (event.key === "F11") return;
+
+      // Prevent default for most common hotkeys
+      if (
+        (event.ctrlKey &&
+          (event.key === "n" || // New window
+            event.key === "t" || // New tab
+            event.key === "w" || // Close tab
+            event.key === "f" || // Find
+            event.key === "p" || // Print
+            event.key === "s" || // Save
+            event.key === "o" || // Open
+            event.key === "+" || // Zoom in
+            event.key === "-" || // Zoom out
+            event.key === "0")) || // Reset zoom
+        (event.altKey && event.key === "Home") || // Home page
+        event.key === "F5" || // Refresh
+        event.key === "Escape" // Escape key
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+
+  // Disable context menu
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
+
+  // Disable selection
+  document.addEventListener("selectstart", (event) => {
+    event.preventDefault();
+  });
+}
+
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch((e) => {
-      console.error(`Error attempting to enable fullscreen: ${e.message}`);
-    });
-  } else if (document.exitFullscreen) {
-    document.exitFullscreen();
+    requestFullScreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
+}
+
+function adjustForKeyboard(gameContainer) {
+  setVH();
+  const viewportHeight = window.innerHeight;
+  const cardContainer = document.getElementById("card-container");
+  const sentenceContainer = document.getElementById("sentence-container");
+  const letterContainer = document.getElementById("letter-container");
+  const feedback = document.getElementById("feedback");
+  const emojiDisplay = document.getElementById("emoji-display");
+
+  setTimeout(() => {
+    const isKeyboardVisible =
+      window.visualViewport.height < viewportHeight * 0.8;
+    const availableHeight = window.visualViewport.height;
+    const newSize = isKeyboardVisible
+      ? Math.min(65, Math.max(50, (availableHeight / viewportHeight) * 65))
+      : 65;
+
+    cardContainer.style.width = `${newSize}vw`;
+    cardContainer.style.height = `${newSize}vw`;
+
+    // Adjust the top margin of the card container
+    cardContainer.style.marginTop = isKeyboardVisible ? '6vh' : '18vh';
+
+    emojiDisplay.style.fontSize = `${
+      isKeyboardVisible ? Math.max(25, newSize * 0.5) : 35
+    }vw`;
+    emojiDisplay.style.top = isKeyboardVisible
+      ? "calc(50% + 5px)"
+      : "calc(50% + 10px)";
+    emojiDisplay.style.height = isKeyboardVisible
+      ? "calc(100% - 20px)"
+      : "calc(100% - 40px)";
+
+    gameContainer.style.height = `${availableHeight}px`;
+    gameContainer.style.padding = isKeyboardVisible
+      ? "1vh 3vw 0.5vh"
+      : "2vh 3vw 1vh";
+
+    Object.assign(sentenceContainer.style, {
+      fontSize: isKeyboardVisible
+        ? "clamp(12px, 3vw, 18px)"
+        : "clamp(16px, 4vw, 24px)",
+      minHeight: isKeyboardVisible ? "1.2rem" : "1.5rem",
+      marginBottom: "1vh",
+    });
+
+    Object.assign(letterContainer.style, {
+      height: isKeyboardVisible ? "6vh" : "10vh",
+      width: isKeyboardVisible ? "94vw" : "90vw",
+    });
+
+    Object.assign(feedback.style, {
+      fontSize: isKeyboardVisible
+        ? "clamp(12px, 3vw, 18px)"
+        : "clamp(16px, 4vw, 24px)",
+      height: isKeyboardVisible ? "1.2rem" : "1.5rem",
+    });
+
+    Object.assign(cardContainer.style, {
+      position: "relative",
+      aspectRatio: "1 / 1",
+    });
+
+    // Force a repaint
+    cardContainer.offsetHeight;
+    emojiDisplay.offsetHeight;
+  }, 100);
 }

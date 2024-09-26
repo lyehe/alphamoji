@@ -1,0 +1,670 @@
+A:
+  - emoji: 🍎
+    name: Apple
+  - emoji: ✈️
+    name: Airplane
+  - emoji: 👽
+    name: Alien
+  - emoji: 🐜
+    name: Ant
+  - emoji: 🚑
+    name: Ambulance
+  - emoji: 🎨
+    name: Artist
+  - emoji: 🥑
+    name: Avocado
+  - emoji: 👨‍🚀
+    name: Astronaut
+  - emoji: 😇
+    name: Angel Face
+  - emoji: 🐒
+    name: Ape
+  - emoji: 🏹
+    name: Archery
+  - emoji: 🧮
+    name: Abacus
+  - emoji: 🏺
+    name: Amphora
+  - emoji: 😮
+    name: Astonished
+B:
+  - emoji: 🍌
+    name: Banana
+  - emoji: 🐻
+    name: Bear
+  - emoji: 🎈
+    name: Balloon
+  - emoji: 🦋
+    name: Butterfly
+  - emoji: 🍞
+    name: Bread
+  - emoji: 🦇
+    name: Bat
+  - emoji: 🏀
+    name: Basketball
+  - emoji: 🚲
+    name: Bicycle
+  - emoji: 🦬
+    name: Bison
+  - emoji: 🧠
+    name: Brain
+  - emoji: 🦴
+    name: Bone
+  - emoji: 🧈
+    name: Butter
+  - emoji: 🪲
+    name: Beetle
+  - emoji: 🛎️
+    name: Bell
+  - emoji: 🧔
+    name: Beard
+  - emoji: 👶
+    name: Baby
+  - emoji: 🦡
+    name: Badger
+  - emoji: 🎂
+    name: Birthday
+  - emoji: 🧺
+    name: Basket
+  - emoji: 🛀
+    name: Bathtub
+  - emoji: 🐝
+    name: Bee
+  - emoji: 🔔
+    name: Bell
+  - emoji: 🚴
+    name: Bicyclist
+  - emoji: 🦅
+    name: Bald Eagle
+  - emoji: 🍺
+    name: Beer
+  - emoji: 🦋
+    name: Butterfly
+
+C:
+  - emoji: 🍪
+    name: Cookie
+  - emoji: 🐱
+    name: Cat
+  - emoji: 🤠
+    name: Cowboy
+  - emoji: 🎪
+    name: Circus
+  - emoji: 🐄
+    name: Cow
+  - emoji: 🥕
+    name: Carrot
+  - emoji: 🍰
+    name: Cake
+  - emoji: 🚗
+    name: Car
+  - emoji: 🦀
+    name: Crab
+  - emoji: 🧀
+    name: Cheese
+  - emoji: ☕
+    name: Coffee
+  - emoji: 🕰️
+    name: Clock
+  - emoji: 🤡
+    name: Clown
+  - emoji: 🌵
+    name: Cactus
+  - emoji: 🍫
+    name: Chocolate
+  - emoji: 🐔
+    name: Chicken
+  - emoji: 🌽
+    name: Corn
+  - emoji: 🥥
+    name: Coconut
+  - emoji: 🧢
+    name: Cap
+  - emoji: 🎄
+    name: Christmas
+
+D:
+  - emoji: 🦕
+    name: Dinosaur
+  - emoji: 🐶
+    name: Dog
+  - emoji: 🍩
+    name: Donut
+  - emoji: 🐬
+    name: Dolphin
+  - emoji: 💃
+    name: Dancer
+  - emoji: 🎲
+    name: Dice
+  - emoji: 🥁
+    name: Drum
+  - emoji: 💎
+    name: Diamond
+  - emoji: 🦌
+    name: Deer
+  - emoji: 🧬
+    name: DNA
+  - emoji: 🚪
+    name: Door
+  - emoji: 🐉
+    name: Dragon
+  - emoji: 😵
+    name: Dizzy
+
+E:
+  - emoji: 🐘
+    name: Elephant
+  - emoji: 🥚
+    name: Egg
+  - emoji: 👁️
+    name: Eye
+  - emoji: 🦅
+    name: Eagle
+  - emoji: 🎧
+    name: Earphones
+  - emoji: 🧝
+    name: Elf
+  - emoji: 🌍
+    name: Earth
+  - emoji: 🍆
+    name: Eggplant
+  - emoji: 🦻
+    name: Ear
+  - emoji: 🧯
+    name: Extinguisher
+  - emoji: 📧
+    name: Email
+F:
+  - emoji: 🐸
+    name: Frog
+  - emoji: 🦊
+    name: Fox
+  - emoji: 🍟
+    name: Fries
+  - emoji: 🐠
+    name: Fish
+  - emoji: 🔥
+    name: Fire
+  - emoji: 🦩
+    name: Flamingo
+  - emoji: 🌻
+    name: Flower
+  - emoji: 🏈
+    name: Football
+  - emoji: 🍳
+    name: Frying Pan
+  - emoji: 🦶
+    name: Foot
+  - emoji: 🍴
+    name: Fork Knife
+  - emoji: 🧚
+    name: Fairy
+  - emoji: 🥏
+    name: Flying Disc
+  - emoji: 🥶
+    name: Freeze
+  - emoji: 😤
+    name: Frustrated
+  - emoji: 👨‍👩‍👧‍👦
+    name: Family
+  - emoji: 🎡
+    name: Ferris Wheel
+  - emoji: 🌫️
+    name: Fog
+  - emoji: 🍂
+    name: Fallen Leaf
+G:
+  - emoji: 🦒
+    name: Giraffe
+  - emoji: 🍇
+    name: Grapes
+  - emoji: 🎸
+    name: Guitar
+  - emoji: 👻
+    name: Ghost
+  - emoji: 🦍
+    name: Gorilla
+  - emoji: 🧤
+    name: Gloves
+  - emoji: 🎮
+    name: Game
+  - emoji: 🥅
+    name: Goal Net
+  - emoji: 🧄
+    name: Garlic
+  - emoji: 🔫
+    name: Gun
+  - emoji: 🧑‍🎓
+    name: Graduate
+  - emoji: 😀
+    name: Grinning
+  - emoji: 🤪
+    name: Goofy
+  - emoji: 🏋️
+    name: Gym
+  - emoji: 🧞
+    name: Genie
+  - emoji: 🦢
+    name: Goose
+H:
+  - emoji: 🐹
+    name: Hamster
+  - emoji: 🏠
+    name: House
+  - emoji: 🎩
+    name: Hat
+  - emoji: 🚁
+    name: Helicopter
+  - emoji: 🐴
+    name: Horse
+  - emoji: 🔨
+    name: Hammer
+  - emoji: 🦔
+    name: Hedgehog
+  - emoji: 🤗
+    name: Hugging
+  - emoji: 🍯
+    name: Honey
+  - emoji: 🦛
+    name: Hippo
+  - emoji: 🌺
+    name: Hibiscus
+  - emoji: 🥅
+    name: Hockey
+  - emoji: 🧑‍🦰
+    name: Hairstyle
+  - emoji: 😂
+    name: Hilarious
+I:
+  - emoji: 🍦
+    name: Ice Cream
+  - emoji: 🏝️
+    name: Island
+  - emoji: 🧊
+    name: Ice Cube
+  - emoji: 🦎
+    name: Iguana
+  - emoji: 👀
+    name: Eyes
+  - emoji: 🧑‍🏫
+    name: Instructor
+  - emoji: 🍨
+    name: Ice Cream
+  - emoji: 🦗
+    name: Insect
+  - emoji: 🧛
+    name: Immortal
+  - emoji: 🧊
+    name: Iceberg
+  - emoji: 😇
+    name: Innocent
+  - emoji: 🧊
+    name: Ice
+J:
+  - emoji: 🤹
+    name: Juggler
+  - emoji: 🕹️
+    name: Joystick
+  - emoji: 🧃
+    name: Juice Box
+  - emoji: 👖
+    name: Jeans
+  - emoji: 🃏
+    name: Joker
+  - emoji: 🎃
+    name: Jack-O-Lantern
+  - emoji: 🦘
+    name: Jumper
+  - emoji: 💎
+    name: Jewel
+  - emoji: 🧑‍⚖️
+    name: Judge
+  - emoji: 🥋
+    name: Judo
+  - emoji: 😂
+    name: Joyful
+K:
+  - emoji: 🪁
+    name: Kite
+  - emoji: 🔑
+    name: Key
+  - emoji: 🥝
+    name: Kiwi
+  - emoji: 🦘
+    name: Kangaroo
+  - emoji: 🥋
+    name: Karate
+  - emoji: 🦅
+    name: Kestrel
+  - emoji: 🔪
+    name: Knife
+  - emoji: 🧸
+    name: Koala
+  - emoji: 😘
+    name: Kiss
+  - emoji: 🦵
+    name: Knee
+  - emoji: 🛶
+    name: Kayak
+L:
+  - emoji: 🦁
+    name: Lion
+  - emoji: 🍋
+    name: Lemon
+  - emoji: 🦎
+    name: Lizard
+  - emoji: 💡
+    name: Light
+  - emoji: 🍃
+    name: Leaf
+  - emoji: 🦙
+    name: Llama
+  - emoji: 🐞
+    name: Ladybug
+  - emoji: 🦵
+    name: Leg
+  - emoji: 🔒
+    name: Lock
+  - emoji: 😂
+    name: Laughing
+  - emoji: 💕
+    name: Love
+  - emoji: 🧳
+    name: Luggage
+M:
+  - emoji: 🐒
+    name: Monkey
+  - emoji: 🌙
+    name: Moon
+  - emoji: 🍄
+    name: Mushroom
+  - emoji: 🎵
+    name: Music
+  - emoji: 🧲
+    name: Magnet
+  - emoji: 🏍️
+    name: Motorcycle
+  - emoji: 🦠
+    name: Microbe
+  - emoji: 📫
+    name: Mailbox
+  - emoji: 🎶
+    name: Music
+  - emoji: 🍖
+    name: Meat
+  - emoji: 🧑‍⚕️
+    name: Medic
+  - emoji: 🦟
+    name: Mosquito
+  - emoji: 🌋
+    name: Mountain
+  - emoji: 😠
+    name: Mad
+N:
+  - emoji: 👃
+    name: Nose
+  - emoji: 🌃
+    name: Night
+  - emoji: 📰
+    name: Newspaper
+  - emoji: 🔢
+    name: Numbers
+  - emoji: 🎶
+    name: Notes
+  - emoji: 🌰
+    name: Nut
+  - emoji: 🤓
+    name: Nerd
+  - emoji: 🌛
+    name: New Moon
+O:
+  - emoji: 🐙
+    name: Octopus
+  - emoji: 🦉
+    name: Owl
+  - emoji: 🍊
+    name: Orange
+  - emoji: 🌊
+    name: Ocean
+  - emoji: 🧅
+    name: Onion
+  - emoji: 🦧
+    name: Orangutan
+  - emoji: 🦪
+    name: Oyster
+  - emoji: 😮
+    name: Open Mouth
+  - emoji: 🧓
+    name: Old
+  - emoji: 👌
+    name: OK
+P:
+  - emoji: 🐼
+    name: Panda
+  - emoji: 🍕
+    name: Pizza
+  - emoji: 🦜
+    name: Parrot
+  - emoji: 🖊️
+    name: Pen
+  - emoji: 🥞
+    name: Pancakes
+  - emoji: 🎨
+    name: Palette
+  - emoji: 🦚
+    name: Peacock
+  - emoji: 🥳
+    name: Party
+  - emoji: 🥜
+    name: Peanuts
+  - emoji: 🍐
+    name: Pear
+  - emoji: 🥔
+    name: Potato
+  - emoji: 🤔
+    name: Pondering
+  - emoji: 🥨
+    name: Pretzel
+Q:
+  - emoji: 👸
+    name: Queen
+  - emoji: ❓
+    name: Question
+  - emoji: 🏹
+    name: Quiver
+  - emoji: 🎭
+    name: Quip
+  - emoji: 😕
+    name: Quizzical
+  - emoji: 🦆
+    name: Quack
+  - emoji: 🎯
+    name: Quarry
+  - emoji: 🤢
+    name: Queasy
+  - emoji: 🔍
+    name: Quest
+  - emoji: 🧊
+    name: Quench
+R:
+  - emoji: 🤖
+    name: Robot
+  - emoji: 🌹
+    name: Rose
+  - emoji: 🚀
+    name: Rocket
+  - emoji: 🐰
+    name: Rabbit
+  - emoji: 📻
+    name: Radio
+  - emoji: 🏎️
+    name: Race Car
+  - emoji: 🦏
+    name: Rhino
+  - emoji: 🌧️
+    name: Rain
+  - emoji: 🌈
+    name: Rainbow
+  - emoji: 🦊
+    name: Red Fox
+  - emoji: 🍚
+    name: Rice
+  - emoji: 💍
+    name: Ring
+  - emoji: 😠
+    name: Rage
+
+S:
+  - emoji: 🌞
+    name: Sun
+  - emoji: 🌟
+    name: Star
+  - emoji: 🍓
+    name: Strawberry
+  - emoji: 🐍
+    name: Snake
+  - emoji: 🏄
+    name: Surfer
+  - emoji: 🥪
+    name: Sandwich
+  - emoji: 🛹
+    name: Skateboard
+  - emoji: 🐑
+    name: Sheep
+  - emoji: 😃
+    name: Smiley
+  - emoji: 😴
+    name: Sleeping
+  - emoji: 🎿
+    name: Skis
+  - emoji: 🦈
+    name: Shark
+  - emoji: 🧼
+    name: Soap
+T:
+  - emoji: 🐯
+    name: Tiger
+  - emoji: 🌳
+    name: Tree
+  - emoji: 🚂
+    name: Train
+  - emoji: 🍅
+    name: Tomato
+  - emoji: 🦃
+    name: Turkey
+  - emoji: 🧸
+    name: Teddy
+  - emoji: 🌮
+    name: Taco
+  - emoji: 🐢
+    name: Turtle
+  - emoji: 😋
+    name: Tasty
+  - emoji: 🤔
+    name: Thinking
+  - emoji: 🌪️
+    name: Tornado
+  - emoji: 🦷
+    name: Tooth
+  - emoji: 🎭
+    name: Theater
+  - emoji: 🏆
+    name: Trophy
+  - emoji: 🧻
+    name: Toilet
+  - emoji: 🚜
+    name: Tractor
+U:
+  - emoji: 🦄
+    name: Unicorn
+  - emoji: ☂️
+    name: Umbrella
+  - emoji: 🚇
+    name: Underground
+  - emoji: 🆙
+    name: Up!
+  - emoji: 😒
+    name: Unamused
+  - emoji: 🤨
+    name: Unsure
+  - emoji: 🦺
+    name: Uniform
+
+V:
+  - emoji: 🏐
+    name: Volleyball
+  - emoji: 🌋
+    name: Volcano
+  - emoji: 🚐
+    name: Van
+  - emoji: 🎻
+    name: Violin
+  - emoji: 🥕
+    name: Vegetable
+  - emoji: 🦹
+    name: Villain
+  - emoji: 📹
+    name: Video
+  - emoji: 🧛‍♂️
+    name: Vampire
+  - emoji: ✌️
+    name: Victory
+
+W:
+  - emoji: 🌊
+    name: Wave
+  - emoji: 🐺
+    name: Wolf
+  - emoji: 🍉
+    name: Watermelon
+  - emoji: ⌚
+    name: Watch
+  - emoji: 🚶
+    name: Walking
+  - emoji: 🧇
+    name: Waffle
+  - emoji: 🪄
+    name: Wand
+  - emoji: 🌬️
+    name: Wind Face
+  - emoji: 🥀
+    name: Wilted Flower
+  - emoji: 🥳
+    name: Woohoo
+  - emoji: 🥴
+    name: Woozy
+X:
+  - emoji: ❌
+    name: X Mark
+  - emoji: ❎
+    name: X Button
+  - emoji: 🎄
+    name: Xmas Tree
+Y:
+  - emoji: 🪀
+    name: Yo-yo
+  - emoji: 🧒
+    name: Young
+  - emoji: 🧘
+    name: Yoga
+  - emoji: 💛
+    name: Yellow
+  - emoji: ☯️
+    name: YinYang
+  - emoji: 🥱
+    name: Yawning
+  - emoji: 😋
+    name: Yummy
+Z:
+  - emoji: 🦓
+    name: Zebra
+  - emoji: 🧟
+    name: Zombie
+  - emoji: 💤
+    name: Zzz
+  - emoji: ⚡
+    name: Zap
+  - emoji: 🤐
+    name: Zipper-Mouth
+  - emoji: 🧟‍♀️
+    name: Zombie

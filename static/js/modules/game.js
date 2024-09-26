@@ -29,6 +29,9 @@ export async function initializeGame() {
       updateDisplay(previousLetterData, currentLetterData, nextLetterData);
       startTimer();
       readyForInput = true;
+
+      // Log the first letter to history with 0 time taken
+      await updateTimeTaken(currentLetterData.letter, 0);
     } else {
       throw new Error("Failed to initialize game due to API errors");
     }
@@ -60,7 +63,7 @@ export async function handleCorrectGuess() {
   playCorrectSound();
 
   const timeTaken = getElapsedTime();
-  await updateTimeTaken(currentLetterData.letter, timeTaken);
+  await updateHistory(currentLetterData.letter, timeTaken, currentLetterData.emoji, currentLetterData.displayText);
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -71,6 +74,23 @@ export async function handleCorrectGuess() {
   updateDisplay(previousLetterData, currentLetterData, nextLetterData);
   resetTimer();
   readyForInput = true;
+}
+
+async function updateHistory(letter, timeTaken, emoji, emojiName) {
+  try {
+    const response = await fetch("/update_history", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ letter, time_taken: timeTaken, emoji, emoji_name: emojiName }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error updating history:", error);
+  }
 }
 
 /**

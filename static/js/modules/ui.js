@@ -10,6 +10,30 @@ let currentFontIndex = 0;
 const cases = ["uppercase", "lowercase"];
 let currentCaseIndex = 0;
 
+// Add these lines at the beginning of the file
+const emojiStyles = ["system", "twemoji"];
+let currentEmojiStyleIndex = 0;
+
+// Add this new function
+export function toggleEmojiStyle() {
+  const emojiStyleToggleBtn = document.getElementById("emojiStyleToggleBtn");
+  currentEmojiStyleIndex = (currentEmojiStyleIndex + 1) % emojiStyles.length;
+  const currentStyle = emojiStyles[currentEmojiStyleIndex];
+
+  if (emojiStyleToggleBtn) {
+    const config = {
+      system: { text: "📱", label: "Switch to Twitter emoji style" },
+      twemoji: { text: "🐦", label: "Switch to system emoji style" },
+    };
+    const { text, label } = config[currentStyle];
+    emojiStyleToggleBtn.textContent = text;
+    emojiStyleToggleBtn.setAttribute("aria-label", label);
+  }
+
+  // Apply the new emoji style
+  document.body.dataset.emojiStyle = currentStyle;
+}
+
 /**
  * Toggles between rainbow and gray color modes for the display text.
  */
@@ -40,6 +64,7 @@ export function toggleFont() {
     document.getElementById("letter-display"),
     document.getElementById("previous-letter"),
     document.getElementById("next-letter"),
+    document.getElementById("timer")
   ];
   const fontToggleBtn = document.getElementById("fontToggleBtn");
 

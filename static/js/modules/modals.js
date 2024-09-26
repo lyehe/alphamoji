@@ -12,7 +12,8 @@ export function showHistory() {
       const historyModal = document.getElementById("historyModal");
 
       historyList.innerHTML = "";
-      data.forEach(item => {
+      // Reverse the array to display the most recent items first
+      data.reverse().forEach(item => {
         const li = document.createElement("li");
         const timeTaken = item.time_taken !== null ? `${item.time_taken.toFixed(2)}s` : 'N/A';
         li.textContent = `${item.letter}: ${item.emoji} (${item.emoji_name}) - ⏱️ ${timeTaken} - ❌ ${item.error}`;
@@ -70,5 +71,28 @@ export function setupModalClosers() {
     if (event.target === elements.historyModal) closeModal(elements.historyModal);
     if (event.target === elements.statsModal) closeModal(elements.statsModal);
   });
+
+  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
+  if (clearHistoryBtn) {
+    clearHistoryBtn.addEventListener("click", clearHistory);
+  }
+}
+
+function clearHistory() {
+  fetch("/clear_history", { method: "POST" })
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      if (data.status === "success") {
+        const historyList = document.getElementById("historyList");
+        if (historyList) {
+          historyList.innerHTML = "";
+        }
+        showHistory(); // Refresh the history display
+      }
+    })
+    .catch(error => console.error('Error clearing history:', error));
 }
 
