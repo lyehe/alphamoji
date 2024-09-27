@@ -66,9 +66,15 @@ function setupEventListeners() {
     }
   });
 
-  // Add the keydown event listener here, after startAudioAndFullscreen has been triggered
+  // Replace the existing keydown event listener with this:
   document.addEventListener("keydown", (event) => {
-    handleKeyPress(event);
+    if (window.mobileInputElement && document.activeElement === window.mobileInputElement) {
+      // Handle mobile input
+      handleMobileInput({ key: event.key });
+    } else {
+      // Handle desktop input
+      handleKeyPress(event);
+    }
   });
 }
 

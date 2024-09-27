@@ -1,4 +1,4 @@
-import { handleKeyPress } from "./game.js";
+import { handleKeyPress } from "./input.js";  // Make sure this import is correct
 
 // Add this function at the beginning of the file
 function setVH() {
@@ -23,6 +23,8 @@ export function handleMobileKeyboard() {
 
   if (isMobile) {
     setupMobileInterface(gameContainer, showKeyboardBtn);
+    // Add this line to make mobileInputElement globally accessible
+    window.mobileInputElement = mobileInputElement;
   } else {
     setupDesktopInterface(showKeyboardBtn, fullscreenToggleBtn);
   }
@@ -101,12 +103,13 @@ function createMobileKeyboardInput() {
  * @param {Event} event - The input event.
  */
 function handleMobileInput(event) {
-  const inputChar = event.target.value;
+  const inputChar = event.key || event.target.value;
   if (inputChar) {
     handleKeyPress({ key: inputChar.toLowerCase() });
-    // Remove the requestFullScreen call from here
   }
-  event.target.value = "";
+  if (event.target && event.target.value) {
+    event.target.value = "";
+  }
 }
 
 function toggleMobileKeyboard() {
