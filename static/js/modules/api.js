@@ -12,6 +12,7 @@ export async function getRandomLetter() {
     return {
       letter: data.letter,
       emoji: data.emoji,
+      emoji_name: data.emoji_name,
       displayText: data.display_text,
     };
   } catch (error) {
@@ -36,19 +37,5 @@ export async function reportError(letter) {
     });
   } catch (error) {
     console.error("Error reporting letter error:", error);
-  }
-}
-
-export async function updateTimeTaken(letter, timeTaken) {
-  try {
-    await fetch("/update_time_taken", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ letter, time_taken: timeTaken }),
-    });
-  } catch (error) {
-    console.error("Error updating time taken:", error);
   }
 }

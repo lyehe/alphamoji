@@ -8,7 +8,7 @@ Feel free to try it out at https://alphamoji.vercel.app/
 
 ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/alphamoji?style=flat-square)
 
-If you want to run it locally, you need to install `flask` and `ymal` in your python envrionment and run `python app.py`.
+If you want to run it locally, you need to install `flask` and `yaml` in your python environment and run `python app.py`.
 
 The music is generated with Suno's AI. **WARNING**: it will autoplay in the background at the start of the game after you click something.
 

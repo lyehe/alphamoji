@@ -1,4 +1,4 @@
-import { getRandomLetter, reportError, updateTimeTaken } from "./api.js";
+import { getRandomLetter, reportError } from "./api.js";
 import { startTimer, resetTimer, getElapsedTime } from "./timer.js";
 import { updateDisplay } from "./ui.js";
 import { playCorrectSound, playIncorrectSound } from "./audio.js";
@@ -29,9 +29,6 @@ export async function initializeGame() {
       updateDisplay(previousLetterData, currentLetterData, nextLetterData);
       startTimer();
       readyForInput = true;
-
-      // Log the first letter to history with 0 time taken
-      await updateTimeTaken(currentLetterData.letter, 0);
     } else {
       throw new Error("Failed to initialize game due to API errors");
     }
@@ -63,7 +60,7 @@ export async function handleCorrectGuess() {
   playCorrectSound();
 
   const timeTaken = getElapsedTime();
-  await updateHistory(currentLetterData.letter, timeTaken, currentLetterData.emoji, currentLetterData.displayText);
+  await updateHistory(currentLetterData.letter, timeTaken, currentLetterData.emoji, currentLetterData.emoji_name);
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
