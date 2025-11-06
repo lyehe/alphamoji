@@ -1,0 +1,41 @@
+.keyboard {
+  padding: 20px;
+  background: #f0f0f0;
+  border-radius: 8px;
+}
+
+.hint {
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.key {
+  padding: 16px 8px;
+  font-size: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.key:hover {
+  background: #e0e0e0;
+}
+
+.key:active {
+  transform: scale(0.95);
+}
+
+.key.highlight {
+  border-color: #4CAF50;
+  background: #E8F5E9;
+}

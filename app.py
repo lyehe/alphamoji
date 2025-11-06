@@ -1,4 +1,5 @@
 from flask import Flask, render_template, jsonify, session, request
+from flask_cors import CORS
 from typing import Dict, List, Any
 import os
 from src.game_logic import generate_random_letter, create_letter_result
@@ -9,6 +10,12 @@ app = Flask(__name__, static_folder="static", static_url_path="/static")
 app.secret_key = os.environ.get(
     "SECRET_KEY", "default_secret_key"
 )  # Use environment variable or a default
+
+# LEARNING: Enable CORS for React frontend
+# CORS = Cross-Origin Resource Sharing
+# Allows React app (localhost:5173) to call Flask API (localhost:5000)
+# Without this, browser blocks requests due to "same-origin policy"
+CORS(app, supports_credentials=True)
 
 
 @app.route("/")

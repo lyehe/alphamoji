@@ -1,0 +1,36 @@
+/**
+ * LetterDisplay Component Styles
+ * 
+ * LEARNING: CSS Modules scope styles to this component only
+ * Class names like .letter become unique: LetterDisplay_letter_a1b2c3
+ */
+
+.letter {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.letterText {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.current {
+  border-color: #4CAF50;
+  background-color: #E8F5E9;
+  transform: scale(1.2);
+}
+
+.previous, .next {
+  opacity: 0.6;
+}
